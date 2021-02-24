@@ -1,0 +1,91 @@
+select city, count(airport_code)
+from dst_project.airports a
+group by a.city
+order by 2 desc
+limit 2
+
+select count(distinct status)
+from dst_project.FLIGHTS 
+
+
+select count(status)
+from dst_project.FLIGHTS 
+where status='Departed'
+
+
+select model, count(seat_no)
+from dst_project.aircrafts a
+join dst_project.seats s 
+on a.aircraft_code=s.aircraft_code 
+where a.model='Boeing 777-300'
+group by a.model
+
+SELECT count(f.flight_id)
+FROM dst_project.flights f
+WHERE (f.actual_departure between '2017-04-01 00:00:00' and '2017-09-01 00:00:00')
+  AND f.status = 'Arrived'
+
+select count(status)
+from dst_project.FLIGHTS 
+where status='Cancelled'
+
+select model, count(aircraft_code)
+from dst_project.aircrafts a
+group by a.model
+
+select timezone, count(city)
+from dst_project.airports
+group by 1
+
+SELECT min(scheduled_departure) as min
+FROM dst_project.flights f
+
+SELECT max(scheduled_arrival-scheduled_departure) as min
+FROM dst_project.flights f
+
+select min(total_amount) as min
+from dst_project.bookings
+
+select seat_no
+from dst_project.tickets t
+join dst_project.boarding_passes b 
+on t.ticket_no=b.ticket_no
+where passenger_id = '4313 788533'
+
+select count(flight_id)
+from dst_project.flights
+where arrival_airport='AAQ' and status='Arrived'
+and scheduled_arrival between '2017-01-01' and '2017-12-31'
+
+select count(flight_id)
+from dst_project.flights
+where departure_airport='AAQ' and status='Arrived'
+and scheduled_departure between '2017-01-01' and '2017-02-28'
+or scheduled_departure between '2017-12-01' and '2017-12-31'
+
+select count(flight_id)
+from dst_project.flights
+where departure_airport='AAQ' and status='Cancelled'
+
+select count(flight_id)
+from dst_project.flights
+where arrival_airport='AAQ' 
+and departure_airport!='VKO' 
+and departure_airport!='SVO' 
+and departure_airport!='DME'
+
+SELECT *
+FROM dst_project.flights f
+left join dst_project.ticket_flights t 
+on f.flight_id=t.flight_id
+left join dst_project.boarding_passes b
+on f.flight_id=b.flight_id
+WHERE f.departure_airport = 'AAQ'
+  AND (date_trunc('month', f.scheduled_departure) in 
+  ('2017-01-01','2017-02-01', '2017-12-01',
+  '2016-01-01','2016-02-01', '2016-12-01',
+  '2018-01-01','2018-02-01', '2018-12-01',
+  '2019-01-01','2019-02-01', '2019-12-01',
+  '2020-01-01','2020-02-01', '2020-12-01'))  AND f.status not in ('Cancelled')
+
+Датасет скачать не смог, Metabase не дал скачать, очень долго думал.
